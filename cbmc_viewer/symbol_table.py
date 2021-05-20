@@ -62,7 +62,9 @@ def parse_symbol(sym):
     # Symbol......: tag-union_name
 
     name = sym.strip().split()[-1]
-    match = re.match('^(tag-)?([a-zA-Z0-9_]+)$', name)
+
+    # Warning: The characters : and $ appear in names from Rust by not C
+    match = re.match('^(tag-)?([a-zA-Z0-9_:$]+)$', name)
     if match:
         return match.group(2)
     return None
@@ -102,7 +104,9 @@ def parse_pretty_name(sym):
     # Pretty name.: union union_name
 
     name = sym.strip().split()[-1]
-    if re.match('^[a-zA-Z0-9_]+$', name):
+
+    # Warning: The characters : and $ appear in names from Rust by not C
+    if re.match('^[a-zA-Z0-9_:$]+$', name):
         return name
     return None
 
